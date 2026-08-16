@@ -1,0 +1,31 @@
+# Environnement Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets
+.env
+
+# Clés cryptographiques
+keys/
+
+# Base de données locale
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Tests / cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db

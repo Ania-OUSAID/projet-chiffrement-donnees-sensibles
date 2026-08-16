@@ -1,0 +1,19 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: sqlite:///./data/secure_vault.db
+      JWT_SECRET: ${JWT_SECRET}
+      KEY_PASSPHRASE: ${KEY_PASSPHRASE}
+      ALLOWED_HOSTS: localhost,127.0.0.1
+    volumes:
+      - vault_data:/app/data
+      - vault_keys:/app/keys
+    restart: unless-stopped
+
+volumes:
+  vault_data:
+  vault_keys:
