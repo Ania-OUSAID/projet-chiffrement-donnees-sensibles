@@ -4,7 +4,8 @@ try:
     import bcrypt
 except ImportError as exc:  # pragma: no cover - explicit installation error
     raise RuntimeError(
-        "The 'bcrypt' package is required. Install dependencies with: pip install -r requirements.txt"
+        "The 'bcrypt' package is required. "
+        "Install dependencies with: pip install -r requirements.txt"
     ) from exc
 
 from app.config import get_settings

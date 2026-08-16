@@ -16,11 +16,13 @@ router = APIRouter(prefix="/vault", tags=["Coffre-fort"])
 
 
 def _aad(record_id: str, owner_id: int, data_type: str) -> bytes:
-    return f"record:{record_id}:{owner_id}:{data_type}".encode("utf-8")
+    return f"record:{record_id}:{owner_id}:{data_type}".encode()
 
 
 def _serialize(payload: dict[str, object]) -> bytes:
-    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode(
+        "utf-8"
+    )
 
 
 def _client_ip(request: Request) -> str:

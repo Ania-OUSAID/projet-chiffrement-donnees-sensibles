@@ -4,7 +4,7 @@ import json
 import os
 import threading
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -41,7 +41,7 @@ class KeyManager:
 
     def create_pending_key(self) -> str:
         with self._lock:
-            key_id = f"rsa-{datetime.now(timezone.utc):%Y%m%d%H%M%S}-{uuid.uuid4().hex[:8]}"
+            key_id = f"rsa-{datetime.now(UTC):%Y%m%d%H%M%S}-{uuid.uuid4().hex[:8]}"
             private_key = rsa.generate_private_key(public_exponent=65537, key_size=3072)
             public_key = private_key.public_key()
 
@@ -75,7 +75,7 @@ class KeyManager:
             registry["keys"][key_id] = {
                 "private": private_filename,
                 "public": public_filename,
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
                 "status": "pending",
             }
             self._save_registry(registry)

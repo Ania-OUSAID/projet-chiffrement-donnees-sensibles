@@ -24,7 +24,9 @@ async def lifespan(_: FastAPI):
 app = FastAPI(
     title=settings.app_name,
     version="1.0.0",
-    description="API pédagogique de protection des données sensibles par bcrypt, AES-GCM et RSA-OAEP.",
+    description=(
+        "API pédagogique de protection des données sensibles par bcrypt, AES-GCM et RSA-OAEP."
+    ),
     lifespan=lifespan,
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(settings.allowed_hosts))

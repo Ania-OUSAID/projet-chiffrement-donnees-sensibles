@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 
 from app.models import AuditLog
 
-
 SENSITIVE_KEYS = {"password", "token", "secret", "payload", "ciphertext", "wrapped_key"}
 
 

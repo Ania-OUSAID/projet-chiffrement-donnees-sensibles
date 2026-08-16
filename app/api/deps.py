@@ -11,14 +11,11 @@ from app.database import get_db
 from app.models import User
 from app.security.tokens import TokenError, decode_access_token
 
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 DbSession = Annotated[Session, Depends(get_db)]
 
 
-def get_current_user(
-    token: Annotated[str, Depends(oauth2_scheme)], db: DbSession
-) -> User:
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: DbSession) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Authentification requise.",
@@ -43,7 +40,9 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 def require_admin(current_user: CurrentUser) -> User:
     if current_user.role != "admin":
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Accès administrateur requis.")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Accès administrateur requis."
+        )
     return current_user
 
 

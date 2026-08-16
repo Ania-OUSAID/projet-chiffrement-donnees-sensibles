@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, LargeBinary, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -9,7 +9,7 @@ from app.database import Base
 
 
 def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 class User(Base):
@@ -26,9 +26,11 @@ class User(Base):
     email_wrapped_key: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     email_key_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
 
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False
+    )
 
-    records: Mapped[list["SensitiveRecord"]] = relationship(
+    records: Mapped[list[SensitiveRecord]] = relationship(
         back_populates="owner", cascade="all, delete-orphan"
     )
 
@@ -45,7 +47,9 @@ class SensitiveRecord(Base):
     wrapped_key: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     key_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
 
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False
+    )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False
     )
